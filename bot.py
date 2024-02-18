@@ -1,14 +1,14 @@
-import asyncio
 import discord
-import os
+import asyncio
 from discord.ext import commands
-from keep_alive import keep_alive
 
 command_prefix="!"
-
 intents = discord.Intents.default()
 intents.members = True
 client = commands.Bot(intents=discord.Intents.all(), command_prefix="!",description="S1mple Moderation Bot")
+
+snipe_message_author = {}
+snipe_message_content = {}
 
 @client.event
 async def on_ready():
@@ -122,10 +122,6 @@ async def avatar(ctx, *, avamember: discord.Member = None):
     embed.set_footer(text=f"Requested by {ctx.author}")
     await ctx.reply(embed=embed, mention_author=True, delete_after= 10)
 
-
-snipe_message_author = {}
-snipe_message_content = {}
-
 @client.event
 async def on_message_delete(message):
      snipe_message_author[message.channel.id] = message.author
@@ -144,6 +140,5 @@ async def snipe(ctx):
   except KeyError: 
     await ctx.send(f"There are no recently deleted messages in #{channel.name}")
 
-keep_alive()
-token = os.environ.get("BOT_TOKEN")
-client.run(token)
+# Add your token here
+client.run("token")
